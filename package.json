@@ -1,0 +1,18 @@
+{
+  "author": "Dave Wasmer <davewasmer@gmail.com> (davewasmer.com)",
+  "name": "marathon",
+  "description": "Pow for node; keeps your node apps running for you, plus pretty my-project.dev URLs",
+  "version": "0.1.0",
+  "homepage": "https://github.com/davewasmer/marathon",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/davewasmer/marathon.git"
+  },
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
