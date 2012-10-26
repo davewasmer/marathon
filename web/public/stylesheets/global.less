@@ -1,3 +1,52 @@
 body {
-  padding-top: @navbarHeight + 20px;
+  margin: 0;
+  padding: 0;
+}
+* {
+  .user-select(none);
+  cursor: default;
+}
+.project-list {
+
+}
+.project {
+  .clearfix;
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #ddd;
+  .favicon {
+    float: left;
+    margin: 15px 8px 0 0;
+  }
+  &:hover {
+    background-color: white;
+    .restart {
+      display: block;
+    }
+  }
+  &.error {
+    background-color: #F4C3C3;
+  }
+  padding: 0 10px;
+  .name {
+    margin: 0;
+    line-height: 40px;
+    color: #aaa;
+    font-weight: 100;
+    font-size: 18px;
+    strong {
+      color: #444;
+      padding-right: 2px;
+    }
+  }
+  .control {
+    .border-radius(20px);
+    background-color: #ccc;
+    .square(20px);
+    text-align: center;
+    margin-top: 12px;
+    margin-right: 5px;
+    &:hover {
+      background-color: #bbb;
+    }
+  }
 }

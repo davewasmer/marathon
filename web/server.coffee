@@ -6,6 +6,7 @@ coffeescript = require 'connect-coffee-script'
 nunjucks =  require 'nunjucks'
 filters = require './lib/filters'
 utils = require './lib/utils'
+cp = require 'child_process'
 
 app = utils.patchApp express()
 
@@ -33,10 +34,24 @@ app.configure ->
   app.use express.methodOverride()
   app.use app.router
 
+getProjectNamed = (name) ->
+  app.projects.filter((p) -> p.name is req.params.name)[0]
 
-app.mount 'home'
+app.get '/', (req, res) ->
+  res.render 'home.html'
 
+app.get '/popup', (req, res) ->
+  res.render 'popup/home.html', projects: app.projects
 
-http.createServer(app).listen process.env.PORT or 3000
+app.get '/favicon/:name', (req, res) ->
+  project = getProjectNamed req.params.name
+  res.sendfile project.favicon
 
-console.log "server running - #{new Date()}"
+app.on 'restart', (data) ->
+  log.info "restart signal received for #{data.name}"
+  getProjectNamed(data.name).restart()
+
+app.on 'open', (data) ->
+  cp.exec "open http://#{data.name}.dev"
+
+module.exports = app

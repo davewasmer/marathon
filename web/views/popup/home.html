@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+  <ul class="project-list unstyled">
+    {% for project in projects %}
+    {% include "popup/project-list-item.html" %}
+    {% endfor %}
+  </ul>
+
+{% endblock %}
