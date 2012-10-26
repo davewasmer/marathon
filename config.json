@@ -1,0 +1,18 @@
+{
+  "web": {
+    "port": 20301,
+    "path": "web"
+  },
+  "dns": {
+    "port": 20300
+  },
+  "projects": {
+    "max": 40,
+    "path": "~/.marathon"
+  },
+  "urls": {
+    "tlds": [
+      "dev"
+    ]
+  }
+}

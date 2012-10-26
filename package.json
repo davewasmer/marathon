@@ -1,7 +1,7 @@
 {
   "author": "Dave Wasmer <davewasmer@gmail.com> (davewasmer.com)",
   "name": "marathon",
-  "description": "Pow for node; keeps your node apps running for you, plus pretty my-project.dev URLs",
+  "description": "Pow for node; keeps your node apps running for you, plus pretty yourproject.dev URLs",
   "version": "0.1.0",
   "homepage": "https://github.com/davewasmer/marathon",
   "repository": {
@@ -9,7 +9,14 @@
     "url": "git://github.com/davewasmer/marathon.git"
   },
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "config-chain": "~1.1.2",
+    "oofile": "~0.1.0",
+    "custom-logger": "~0.2.1",
+    "node-uuid": "~1.4.0",
+    "eventemitter2": "~0.4.10",
+    "dnsserver": "https://github.com/sstephenson/dnsserver.js/tarball/4f2c713b2e"
+  },
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
