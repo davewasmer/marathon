@@ -1,8 +1,32 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <div class="hero-unit">
-    <h1>Welcome</h1>
-    <p>Your blank slate awaits</p>
-  </div>
+<script type="text/javascript">
+window.projects = [
+  {% for project in projects %}
+    "{{ project.name }}",
+  {% endfor %}
+];
+</script>
+<div class="home">
+
+<h1 class="brand hidden-phone">Marathon</h1>
+
+{% if projects.length == 0 %}
+
+  <h2>Well done!</h2>
+  <p>You've successfully installed marathon. To get started, just symlink one of your Node.js projects into your marathon directory!</p>
+
+{% else %}
+
+  <ul class="projects unstyled">
+    {% for project in projects %}
+      {% include "project.html" %}
+    {% endfor %}
+  </ul>
+
+{% endif %}
+
+
+</div>
 {% endblock %}

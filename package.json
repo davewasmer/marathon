@@ -11,7 +11,7 @@
   "main": "index.js",
   "dependencies": {
     "config-chain": "~1.1.2",
-    "oofile": "~0.1.0",
+    "oofile": "~0.1.1",
     "custom-logger": "~0.2.1",
     "node-uuid": "~1.4.0",
     "eventemitter2": "~0.4.10",
@@ -21,9 +21,9 @@
     "coffee-script": "1.3.x",
     "less-middleware": "0.1.x",
     "nunjucks": "0.1.x",
-    "custom-logger": "~0.2.1",
     "connect-coffee-script": "git://github.com/davewasmer/node-connect-coffee-script.git",
-    "socket.io": "0.9.x"
+    "socket.io": "0.9.x",
+    "request": "~2.11.4"
   },
   "devDependencies": {},
   "optionalDependencies": {},

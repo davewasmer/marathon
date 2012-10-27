@@ -1,0 +1,39 @@
+
+
+      <li class="project" data-name="{{ project.name }}">
+
+        <div class="action">
+
+          <div class="status busy">
+            loading …
+          </div>
+
+          <a href="http://{{ project.name }}.dev/" class="btn open control" target="_blank">
+            <i class="icon icon-white icon-eye-open"></i>
+            <span class="text">view</span>
+          </a>
+          <button class="btn edit control">
+            <i class="icon icon-white icon-pencil"></i>
+            <span class="text">edit</span>
+          </button>
+          <button class="btn browse control">
+            <i class="icon icon-white icon-th-list"></i>
+            <span class="text">browse</span>
+          </button>
+          <button class="btn restart control">
+            <i class="icon icon-white icon-refresh"></i>
+            <span class="text">restart</span>
+          </button>
+
+        </div>
+
+        <div class="favicon">
+          <img src="/{{ project.name }}/favicon">
+        </div>
+        {{ project.name }}
+
+      </li>
+      <div class="project-console hide">
+        <div class="log">
+        </div>
+      </div>

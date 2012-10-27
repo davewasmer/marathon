@@ -2,51 +2,84 @@ body {
   margin: 0;
   padding: 0;
 }
-* {
-  .user-select(none);
-  cursor: default;
-}
-.project-list {
 
+h1,h2,h3,h4,h5,h6,.hero-unit p {
+  text-transform: lowercase;
 }
-.project {
-  .clearfix;
-  background-color: #f4f4f4;
-  border-bottom: 1px solid #ddd;
-  .favicon {
-    float: left;
-    margin: 15px 8px 0 0;
+
+h1 {
+  font-size: 48px;
+  line-height: 60px;
+}
+h1.brand {
+  color: @accentTextColor;
+  font-size: 60px;
+  line-height: 72px;
+  text-align: center;
+}
+
+.navbar {
+  font-size: 18px;
+  .brand {
+    font-family: @headingsFontFamily;
+    font-weight: bold;
   }
-  &:hover {
-    background-color: white;
-    .restart {
-      display: block;
-    }
+}
+
+footer {
+  position:absolute;
+  bottom:10px;
+  @media (max-width:767px) {
+    .hide;
   }
-  &.error {
-    background-color: #F4C3C3;
-  }
-  padding: 0 10px;
-  .name {
-    margin: 0;
-    line-height: 40px;
-    color: #aaa;
-    font-weight: 100;
-    font-size: 18px;
-    strong {
-      color: #444;
-      padding-right: 2px;
-    }
-  }
-  .control {
-    .border-radius(20px);
-    background-color: #ccc;
-    .square(20px);
-    text-align: center;
-    margin-top: 12px;
-    margin-right: 5px;
-    &:hover {
-      background-color: #bbb;
-    }
-  }
+}
+
+// Flatten out buttons
+// https://gist.github.com/3763225
+.btn          { background: @btnBackground;         border-color: darken(@btnBackground, 5%);   }
+.btn-primary  { background: @btnPrimaryBackground;  border-color: darken(@btnPrimaryBackground, 5%);   }
+.btn-info     { background: @btnInfoBackground;     border-color: darken(@btnInfoBackground,    5%);   }
+.btn-success  { background: @btnSuccessBackground;  border-color: darken(@btnSuccessBackground, 5%);   }
+.btn-warning  { background: @btnWarningBackground;  border-color: darken(@btnWarningBackground, 5%);   }
+.btn-danger   { background: @btnDangerBackground;   border-color: darken(@btnDangerBackground,  5%);   }
+.btn-inverse  { background: @btnInverseBackground;  border-color: darken(@btnInverseBackground, 5%);   }
+.btn:hover          { background: @btnBackgroundHighlight;         }
+.btn-primary:hover  { background: @btnPrimaryBackgroundHighlight;  }
+.btn-info:hover     { background: @btnInfoBackgroundHighlight;     }
+.btn-success:hover  { background: @btnSuccessBackgroundHighlight;  }
+.btn-warning:hover  { background: @btnWarningBackgroundHighlight;  }
+.btn-danger:hover   { background: @btnDangerBackgroundHighlight;   }
+.btn-inverse:hover  { background: @btnInverseBackgroundHighlight;  }
+.btn-primary:active, .btn-primary.active  { background: @btnPrimaryBackgroundHighlight;  }
+.btn-info:active,    .btn-info.active     { background: @btnInfoBackgroundHighlight;     }
+.btn-success:active, .btn-success.active  { background: @btnSuccessBackgroundHighlight;  }
+.btn-warning:active, .btn-warning.active  { background: @btnWarningBackgroundHighlight;  }
+.btn-danger:active,  .btn-danger.active   { background: @btnDangerBackgroundHighlight;   }
+.btn-inverse:active, .btn-inverse.active  { background: @btnInverseBackgroundHighlight;  }
+
+.btn {
+  border: none;
+  .box-shadow(none);
+  .border-radius(0px);
+  text-transform: lowercase;
+  font-weight: 100;
+  color: @brighter;
+  text-shadow: none;
+  font-size: 18px;
+  padding: 15px;
+}
+
+.btn:hover {
+  background-position: 0 0;
+  color: @brighter;
+}
+
+.btn.active, .btn:active {
+  .box-shadow(inset 0 2px 4px rgba(0,0,0,.5));
+}
+
+.btn-huge {
+  padding:20px 30px;
+  font-size: 36px;
+  font-weight: bold;
 }

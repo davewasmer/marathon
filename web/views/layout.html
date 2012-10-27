@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{{ title | default('New Site') }}</title>
+    <title>Marathon - Node applications with nice URLs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Dave Wasmer">
@@ -27,7 +27,6 @@
   <body>
 
     <div class="container">
-      {% include "navbar.html" %}
       {% block content %}{% endblock %}
       {% include "footer.html" %}
     </div>
@@ -37,6 +36,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/javascripts/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/main.js"></script>
 
   </body>
 </html>

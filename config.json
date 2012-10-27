@@ -1,18 +1,23 @@
 {
   "web": {
-    "port": 20301,
+    "port": 20559,
     "path": "web"
   },
   "dns": {
-    "port": 20300
+    "port": 20301
   },
   "projects": {
     "max": 40,
-    "path": "~/.marathon"
+    "path": "/Users/daw/.marathon",
+    "lowestPort": 20310,
+    "logs": "/Users/daw/.marathon/logs"
   },
   "urls": {
     "tlds": [
       "dev"
     ]
+  },
+  "actions": {
+    "editcmd": "subl"
   }
 }

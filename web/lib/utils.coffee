@@ -1,6 +1,8 @@
 socketio = require 'socket.io'
+EventEmitter = require('eventemitter2').EventEmitter2
 
-buffer = []
+msg = new EventEmitter()
+eventsToListenFor = []
 
 exports.patchApp = (app) ->
 
@@ -9,38 +11,32 @@ exports.patchApp = (app) ->
     routes = require "../routes/#{name}"
     routes.mount(app)
 
-  # take the supplied event emitter, and pipe the events
-  # to the socket io connection
-  app.listenTo = (m) ->
-    app.projectMessenger = m
+  app.sockets = {}
 
-  # start the socketio server, and run buffered emits on
-  # connection
   app.startSocket = (server) ->
     io = socketio.listen server
-    io.set 'log level', 1
+    io.set 'log level', 0
     io.sockets.on 'connection', (s) ->
-      socket = s
-      fn() for fn in buffer
+      app.sockets[s.id] = s
+      count = 0
+      count += 1 for key, value of app.sockets
+      console.log count
+      s.on 'disconnect', ->
+        s.removeAllListeners()
+        delete app.sockets[s.id]
+      for event in eventsToListenFor
+        do (event) ->
+          s.on event, (data) ->
+            msg.emit event, data
 
-  # if no connection is ready yet, buffer the listener
-  # otherwise, shortcut to add a socket listener
-  app.on = () ->
-    if app.socket?
-      app.socket.on.apply app.socket, arguments
-    else
-      args = arguments
-      buffer.push () ->
-        app.socket.on.apply app.socket, args
+  app.on = (event, callback) ->
+    eventsToListenFor.push event
+    msg.on event, callback
 
   # if no connection is ready yet, buffer the message
   # otherwise, shortcut to emit a socket message
-  app.emit = () ->
-    if app.socket?
-      app.socket.emit.apply app.socket, arguments
-    else
-      args = arguments
-      buffer.push () ->
-        app.socket.emit.apply app.socket, args
+  app.emit = (event, data) ->
+    for id, s of app.sockets
+      s.emit event, data
 
   app
