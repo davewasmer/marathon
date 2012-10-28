@@ -64,8 +64,8 @@ app.configure ->
 app.get '/', (req, res) ->
   res.render 'home.html', projects: app.projects
 
-app.get '/popup', (req, res) ->
-  res.render 'popup/home.html', projects: app.projects
+app.get '/status', (req, res) ->
+  res.send 'ok!'
 
 app.get '/:name/favicon', (req, res) ->
   project = getProjectNamed req.params.name

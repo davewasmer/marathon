@@ -1,2 +1,2 @@
 nameserver 127.0.0.1
-port DNS_PORT
+port 20301

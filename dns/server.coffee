@@ -17,7 +17,7 @@ module.exports = class DnsServer extends dnsserver.Server
     callback?()
 
   handleRequest: (req, res) =>
-    pattern = new RegExp(config.urls.tlds.join "\|")
+    pattern = new RegExp(config.tld)
 
     q = req.question ? {}
 

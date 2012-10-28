@@ -23,7 +23,8 @@
     "nunjucks": "0.1.x",
     "connect-coffee-script": "git://github.com/davewasmer/node-connect-coffee-script.git",
     "socket.io": "0.9.x",
-    "request": "~2.11.4"
+    "request": "~2.11.4",
+    "prompt": "~0.2.8"
   },
   "devDependencies": {},
   "optionalDependencies": {},
