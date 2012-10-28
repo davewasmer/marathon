@@ -6,8 +6,20 @@
         <string>davewasmer.marathon.marathond</string>
         <key>ProgramArguments</key>
         <array>
-                <string>marathon</string>
+                <string>NODE</string>
+                <string>EXEC</string>
         </array>
+        <key>StandardOutPath</key>
+        <string>LOG</string>
+        <key>StandardErrorPath</key>
+        <string>LOG</string>
+        <key>WorkingDirectory</key>
+        <string>WORKINGDIR</string>
+        <key>EnvironmentVariables</key>
+        <dict>
+                <key>PATH</key>
+                <string>PATHEXPORT</string>
+        </dict>
         <key>KeepAlive</key>
         <true/>
         <key>RunAtLoad</key>

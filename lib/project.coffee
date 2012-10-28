@@ -84,8 +84,11 @@ module.exports = class Project extends EventEmitter
   restart: =>
     @emit 'restarting'
     log.info "[#{@name}] restarting ..."
-    @process.on 'exit', => @start port: @port
-    @stop()
+    if @status is "started" or @status is "starting"
+      @process.on 'exit', => @start port: @port
+      @stop()
+    else
+      @start port: @port
 
   # shut down the server and clean up event listeners to destroy
   # the reference to this project

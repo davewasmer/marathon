@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
   <key>Label</key>
-  <string>daw.slab.forwarding</string>
+  <string>davewasmer.marathon.forwarding</string>
   <key>ProgramArguments</key>
   <array>
     <string>sh</string>

@@ -8,7 +8,11 @@
     "type": "git",
     "url": "git://github.com/davewasmer/marathon.git"
   },
-  "main": "index.js",
+  "scripts": {
+    "postinstall": "sh scripts/install.sh",
+    "preuninstall": "sh scripts/uninstall.sh"
+  },
+  "bin": "index.js",
   "dependencies": {
     "config-chain": "~1.1.2",
     "oofile": "~0.1.1",

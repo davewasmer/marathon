@@ -11,6 +11,8 @@ utils = require './lib/utils'
 config = require '../lib/config'
 cp = require 'child_process'
 
+log.warn process.cwd()
+
 app = utils.patchApp express()
 
 getProjectNamed = (name) ->
