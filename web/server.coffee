@@ -37,7 +37,7 @@ app.configure ->
     project = getProjectNamed domain
 
     if project?
-      request("http://localhost:#{project.port}/#{req.path}").pipe(res)
+      request("http://localhost:#{project.port}#{req.path}").pipe(res)
     else
       if domain is 'marathon'
         next()
