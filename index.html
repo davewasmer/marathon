@@ -32,6 +32,10 @@
 
 <p>Marathon manages your Node.js application servers to get you up and running quickly. No more starting and stopping servers in your development environment. No more managing application port numbers. No more http://localhost:3000. Just a straightforward web interface, and clean, simple URLs.</p>
 
+<p>
+<img src="images/screenshots/one.jpg">
+</p>
+
 <h2>installation</h2>
 
 <pre><code>$ npm install marathon
@@ -39,13 +43,40 @@
 
 <p>During installation, you'll need to answer a couple quick questions about how you want your files setup. After that, it's free and clear. Marathon will automatically start in the background each time you start your computer.</p>
 
-<p>To manage your running applications, check out <a href="http://marathon.dev/">http://marathon.dev/</a>. From there, you can restart the server, open a Finder window at the source, launch your favorite editor on the source, or open the server in a new tab.</p>
+<h2>usage</h2>
+<p>By default, Marathon will inspect <code>~/.marathon</code> for projects to run (this can be changed during installation).</p>
 
-<h2>screenshots!</h2>
+<p>For each folder inside <code>~/.marathon</code>, Marathon will check to see if a <code>package.json</code> exists, and if it has a <code>scripts.start</code> property. If so, Marathon will run the start command.</p>
 
-<p>
-<img src="images/screenshots/one.jpg">
-</p>
+<h2>pretty urls</h2>
+<p>You can see live projects at a pretty URL. Just take the folder name, and add <code>.dev</code> (or whatever TLD you chose during installation). For example, for a project with a folder named <code>my-express-app</code>, you could reach that server at <a href="http://my-express-app.dev/">my-express-app.dev</a></p>
+
+<h2>manage your apps</h2>
+<p>To manage your running applications, check out <a href="http://marathon.dev/">http://marathon.dev/</a>. From there you can:
+
+<ul>
+<li>restart the server</li>
+<li>open a Finder window of the source</li>
+<li>launch your favorite editor on the source</li>
+<li>open the server in a new tab</li>
+</ul>
+
+<h2>logs</h2>
+<p>Output from each server is sent to a log file (by default, in <code>~/.marathon/logs</code>). If you want to see the output of your server in realtime, just run:</p>
+
+<pre><code>$ tail -f ~/.marathon/logs/my-project-name.log
+</code></pre>
+
+<h2>why sudo?</h2>
+<p>The installation script will ask you for your password while it sets up the local DNS forwarding. If you are concerned about what is happening under the hood, feel free to check out the <a href="https://github.com/davewasmer/marathon/blob/master/scripts/install.sh">install script source</a> - it isn't very long, and should be straightforward.</p>
+
+<p>Essentially, to get the pretty URLs you see, Marathon does three things:</p>
+
+<ol>
+  <li>Adds an entry to the <code>/etc/resolver</code> folder. This tells your Mac to resolve any requests for a <code>*.dev</code> domain (or whatever TLD you chose during installation) to a local DNS server run by Marathon.</li>
+  <li>Adds an <code>ipfw</code> rule that tells your Mac to forward any inbound traffic on port 80 to your local machine to a different port (one which doesn't require elevated permissions to use) where the Marathon server will be listening.</li>
+  <li>Adds a launch agent that will start the Marathon server on login. This step actually doesn't require elevated permissions.</li>
+</ol>
 
       </section>
       <footer>
