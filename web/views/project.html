@@ -1,39 +1,44 @@
+<div class="project" data-name="{{ project.name }}">
 
+  <div class="action">
 
-      <li class="project" data-name="{{ project.name }}">
+    <div class="status busy">
 
-        <div class="action">
+    </div>
 
-          <div class="status busy">
-            loading …
-          </div>
+    {% if project.server %}
+    <a href="http://{{ project.name }}.dev/" class="btn view control" target="_blank">
+      <i class="icon icon-white icon-eye-open"></i>
+      <span class="text">view</span>
+    </a>
+    {% endif %}
+    <button class="btn edit control">
+      <i class="icon icon-white icon-pencil"></i>
+      <span class="text">edit</span>
+    </button>
+    <button class="btn browse control">
+      <i class="icon icon-white icon-th-list"></i>
+      <span class="text">browse</span>
+    </button>
+    {% if project.server %}
+    <button class="btn restart control">
+      <i class="icon icon-white icon-refresh"></i>
+      <span class="text">restart</span>
+    </button>
+    {% endif %}
 
-          <a href="http://{{ project.name }}.dev/" class="btn open control" target="_blank">
-            <i class="icon icon-white icon-eye-open"></i>
-            <span class="text">view</span>
-          </a>
-          <button class="btn edit control">
-            <i class="icon icon-white icon-pencil"></i>
-            <span class="text">edit</span>
-          </button>
-          <button class="btn browse control">
-            <i class="icon icon-white icon-th-list"></i>
-            <span class="text">browse</span>
-          </button>
-          <button class="btn restart control">
-            <i class="icon icon-white icon-refresh"></i>
-            <span class="text">restart</span>
-          </button>
+  </div>
 
-        </div>
+  <div class="favicon">
+    <img src="/{{ project.name }}/favicon">
+  </div>
+  {{ project.name }}
 
-        <div class="favicon">
-          <img src="/{{ project.name }}/favicon">
-        </div>
-        {{ project.name }}
+  {% if project.server %}
+  <div class="console hide">
+    <div class="log">
+    </div>
+  </div>
+  {% endif %}
 
-      </li>
-      <div class="project-console hide">
-        <div class="log">
-        </div>
-      </div>
+</div>

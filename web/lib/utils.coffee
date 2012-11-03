@@ -20,7 +20,6 @@ exports.patchApp = (app) ->
       app.sockets[s.id] = s
       count = 0
       count += 1 for key, value of app.sockets
-      console.log count
       s.on 'disconnect', ->
         s.removeAllListeners()
         delete app.sockets[s.id]

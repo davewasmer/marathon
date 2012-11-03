@@ -24,10 +24,10 @@ updateStatus = (name, status) ->
 $(".project").on 'click', (e) ->
   if not $(e.target).closest('.control').length > 0
     if $(e.currentTarget).is('.active')
-      $(@).removeClass('active').next().slideUp('fast')
+      $(@).removeClass('active').find(".console").slideUp('fast')
     else
       $(@).addClass('active')
-      $log = $(@).next().slideDown('fast').find(".log")
+      $log = $(@).find(".console").slideDown('fast').find(".log")
       updateScroll $log
 
 for p in window.projects
@@ -50,6 +50,10 @@ $(".edit").click ->
 $(".browse").click ->
   name = $(@).closest(".project").data 'name'
   socket.emit 'browse', name: name
+
+$(".view").click ->
+  name = $(@).closest(".project").data 'name'
+  socket.emit 'view', name: name
 
 socket.on 'stopping', (d) ->
   console.log "stopping"
@@ -75,7 +79,7 @@ socket.on 'log', (d) ->
   $project = $(".project[data-name=#{d.project}]")
   d.message = d.message.replace(new RegExp('\n', 'g'), '<br>')
   span = "<span class='#{d.type or 'info'}'>#{d.message}</span>"
-  $log = $project.next().find('.log')
+  $log = $project.find('.console .log')
   $log.append span
   updateScroll $log
 

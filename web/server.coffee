@@ -9,9 +9,9 @@ nunjucks =  require 'nunjucks'
 filters = require './lib/filters'
 utils = require './lib/utils'
 config = require '../lib/config'
+proxy = require '../lib/proxy'
 cp = require 'child_process'
 
-log.warn process.cwd()
 
 app = utils.patchApp express()
 
@@ -19,6 +19,18 @@ getProjectNamed = (name) ->
   app.projects.filter((p) -> p.name is name)[0]
 
 app.configure ->
+
+  # check inbound requests, and proxy to project server if one is available
+  app.use proxy(getProjectNamed)
+
+  app.use (req, res, next) ->
+    # render the marathon UI page
+    if req.host.split('.')[...-1].join('.') is 'marathon'
+      next()
+    # render project 404
+    else
+      res.render 'project-not-found.html', name: domain
+
   app.use express.errorHandler()
   app.use less
     src: path.join(__dirname, 'public')
@@ -29,21 +41,6 @@ app.configure ->
     baseDir: 'web/public'
     bare: false
 
-  # check inbound requests, and proxy to project server if one is available
-  app.use (req, res, next) ->
-    domain = req.headers.host.split('.')
-    domain.pop()
-    domain = domain.join('.')
-    project = getProjectNamed domain
-
-    if project?
-      request("http://localhost:#{project.port}#{req.path}").pipe(res)
-    else
-      if domain is 'marathon'
-        next()
-      else
-        res.render 'project-not-found.html', name: domain
-
   # setup templating
   env = new nunjucks.Environment(new nunjucks.FileSystemLoader('web/views'))
   env.express(app)
@@ -53,7 +50,6 @@ app.configure ->
   app.use express.favicon()
   app.use express.logger('dev')
   app.use express.static(__dirname + '/public')
-  app.use express.bodyParser()
   app.use express.methodOverride()
 
   # marathon admin pages
@@ -83,18 +79,23 @@ app.get '/:name/status', (req, res) ->
   res.send project.status
 
 app.on 'restart', (data) ->
-  console.log "web server got request to restart #{data.name}"
+  log.info "restarting #{data.name}"
   project = getProjectNamed(data.name)
   project.restart()
 
 app.on 'browse', (data) ->
-  console.log "web server got request to browse #{data.name}"
+  log.info "browsing #{data.name}"
   project = getProjectNamed(data.name)
   cp.exec "open #{project.path}"
 
+app.on 'view', (data) ->
+  log.info "viewing #{data.name}"
+  project = getProjectNamed(data.name)
+  cp.exec "open http://#{data.name}.#{config.tld}"
+
 app.on 'edit', (data) ->
   project = getProjectNamed(data.name)
-  console.log "web server got request to browse #{data.name}"
+  log.info "browsing #{data.name}"
   cp.exec "#{config.actions.editcmd} #{project.path}"
 
 

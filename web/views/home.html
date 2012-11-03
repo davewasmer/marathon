@@ -19,11 +19,11 @@ window.projects = [
 
 {% else %}
 
-  <ul class="projects unstyled">
+  <div class="projects">
     {% for project in projects %}
       {% include "project.html" %}
     {% endfor %}
-  </ul>
+  </div>
 
 {% endif %}
 

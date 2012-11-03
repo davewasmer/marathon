@@ -56,12 +56,12 @@ update = ->
     if not (name in projectNames)
       newbie = new Project name: name
       do (newbie) ->
-        if newbie.start(port: getNextAvailablePort())
-          newbie.onAny (data = {})->
-            data.project = newbie.name
-            web.emit this.event, data
-          projects.push newbie
-          web.emit "project:added", project: newbie.name
+        newbie.start(port: getNextAvailablePort())
+        newbie.onAny (data = {})->
+          data.project = newbie.name
+          web.emit this.event, data
+        projects.push newbie
+        web.emit "project:added", project: newbie.name
 
   web.projects = projects
 

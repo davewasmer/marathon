@@ -8,6 +8,7 @@ config = require('./config')
 
 module.exports = class Project extends EventEmitter
 
+  server: true
   status: "stopped"
 
   constructor: (options) ->
@@ -40,6 +41,7 @@ module.exports = class Project extends EventEmitter
       if not @package.exists() or not @package.contents().scripts?.start?
         log.warn "#{@name} does not specify an `npm start` command, skipping ..."
         @destroy()
+        @server = false
         return false
 
       # the project has a start command, so start it up
