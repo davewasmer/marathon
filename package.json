@@ -2,7 +2,7 @@
   "author": "Dave Wasmer <davewasmer@gmail.com> (davewasmer.com)",
   "name": "marathon",
   "description": "Pow for node; keeps your node apps running for you, plus pretty yourproject.dev URLs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/davewasmer/marathon",
   "repository": {
     "type": "git",
