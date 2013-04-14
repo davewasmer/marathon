@@ -25,11 +25,11 @@ app.configure ->
 
   app.use (req, res, next) ->
     # render the marathon UI page
-    if req.host.split('.')[...-1].join('.') is 'marathon'
+    if req.host is "marathon.#{config.tld}" or req.host == 'localhost'
       next()
     # render project 404
     else
-      res.render 'project-not-found.html', name: domain
+      res.render 'project-not-found.html', name: req.host
 
   app.use express.errorHandler()
   app.use less

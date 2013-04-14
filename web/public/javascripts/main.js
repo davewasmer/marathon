@@ -9,7 +9,7 @@
 
   updateStatus = function(name, status) {
     var $project, $status, symbol;
-    $project = $(".project[data-name=" + name + "]");
+    $project = $(".project[data-name='" + name + "']");
     $status = $project.find(".status");
     $status.removeClass("success warning error busy");
     switch (status) {
@@ -36,10 +36,10 @@
     var $log;
     if (!$(e.target).closest('.control').length > 0) {
       if ($(e.currentTarget).is('.active')) {
-        return $(this).removeClass('active').next().slideUp('fast');
+        return $(this).removeClass('active').find(".console").slideUp('fast');
       } else {
         $(this).addClass('active');
-        $log = $(this).next().slideDown('fast').find(".log");
+        $log = $(this).find(".console").slideDown('fast').find(".log");
         return updateScroll($log);
       }
     }
@@ -49,7 +49,7 @@
   _fn = function(p) {
     $.get("/" + p + "/log", function(result) {
       result = result.replace(new RegExp('\n', 'g'), '<br>');
-      return $(".project[data-name=" + p + "]").next().find(".log").html(result);
+      return $(".project[data-name='" + p + "']").next().find(".log").html(result);
     });
     return $.get("/" + p + "/status", function(result) {
       return updateStatus(p, result);
@@ -84,6 +84,14 @@
     });
   });
 
+  $(".view").click(function() {
+    var name;
+    name = $(this).closest(".project").data('name');
+    return socket.emit('view', {
+      name: name
+    });
+  });
+
   socket.on('stopping', function(d) {
     console.log("stopping");
     return updateStatus(d.project, 'stopping');
@@ -111,10 +119,10 @@
 
   socket.on('log', function(d) {
     var $log, $project, span;
-    $project = $(".project[data-name=" + d.project + "]");
+    $project = $(".project[data-name='" + d.project + "']");
     d.message = d.message.replace(new RegExp('\n', 'g'), '<br>');
     span = "<span class='" + (d.type || 'info') + "'>" + d.message + "</span>";
-    $log = $project.next().find('.log');
+    $log = $project.find('.console .log');
     $log.append(span);
     return updateScroll($log);
   });

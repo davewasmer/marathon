@@ -4,7 +4,7 @@ updateScroll = ($log) ->
   $log.parent().scrollTop $log.outerHeight()
 
 updateStatus = (name, status) ->
-  $project = $(".project[data-name=#{name}]")
+  $project = $(".project[data-name='#{name}']")
   $status = $project.find(".status")
   $status.removeClass("success warning error busy")
   switch status
@@ -34,7 +34,7 @@ for p in window.projects
   do (p) ->
     $.get "/#{p}/log", (result) ->
       result = result.replace(new RegExp('\n', 'g'), '<br>')
-      $(".project[data-name=#{p}]").next().find(".log").html result
+      $(".project[data-name='#{p}']").next().find(".log").html result
     $.get "/#{p}/status", (result) ->
       updateStatus p, result
 
@@ -76,7 +76,7 @@ socket.on 'dead', (d) ->
   updateStatus d.project, 'dead'
 
 socket.on 'log', (d) ->
-  $project = $(".project[data-name=#{d.project}]")
+  $project = $(".project[data-name='#{d.project}']")
   d.message = d.message.replace(new RegExp('\n', 'g'), '<br>')
   span = "<span class='#{d.type or 'info'}'>#{d.message}</span>"
   $log = $project.find('.console .log')
