@@ -95,7 +95,7 @@ app.on 'view', (data) ->
 
 app.on 'edit', (data) ->
   project = getProjectNamed(data.name)
-  log.info "browsing #{data.name}"
+  log.info "editing #{data.name}"
   cp.exec "#{config.actions.editcmd} #{project.path}"
 
 
