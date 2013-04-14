@@ -11,11 +11,16 @@ updateStatus = (name, status) ->
     when "starting", "stopping"
       $status.addClass("warning")
       symbol = "refresh"
+      $project.find('.start,.restart,.stop').addClass('hide')
     when "started"
       $status.addClass("success")
+      $project.find('.start').addClass('hide')
+      $project.find('.stop,.restart').removeClass('hide')
       symbol = "ok"
     when "stopped"
       $status.addClass("error")
+      $project.find('.restart,.stop').addClass('hide')
+      $project.find('.start').removeClass('hide')
       symbol = "off"
     else
       symbol = "remove"
@@ -57,6 +62,14 @@ $(".browse").click ->
 $(".view").click ->
   name = $(@).closest(".project").data 'name'
   socket.emit 'view', name: name
+
+$(".stop").click ->
+  name = $(@).closest(".project").data 'name'
+  socket.emit 'stop', name: name
+
+$(".start").click ->
+  name = $(@).closest(".project").data 'name'
+  socket.emit 'restart', name: name
 
 socket.on 'stopping', (d) ->
   console.log "stopping"

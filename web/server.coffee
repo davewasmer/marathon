@@ -83,6 +83,16 @@ app.on 'restart', (data) ->
   project = getProjectNamed(data.name)
   project.restart()
 
+app.on 'stop', (data) ->
+  log.info "stopping #{data.name}"
+  project = getProjectNamed(data.name)
+  project.stop()
+
+app.on 'start', (data) ->
+  log.info "starting #{data.name}"
+  project = getProjectNamed(data.name)
+  project.start()
+
 app.on 'browse', (data) ->
   log.info "browsing #{data.name}"
   project = getProjectNamed(data.name)

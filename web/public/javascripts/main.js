@@ -17,13 +17,18 @@
       case "stopping":
         $status.addClass("warning");
         symbol = "refresh";
+        $project.find('.start,.restart,.stop').addClass('hide');
         break;
       case "started":
         $status.addClass("success");
+        $project.find('.start').addClass('hide');
+        $project.find('.stop,.restart').removeClass('hide');
         symbol = "ok";
         break;
       case "stopped":
         $status.addClass("error");
+        $project.find('.restart,.stop').addClass('hide');
+        $project.find('.start').removeClass('hide');
         symbol = "off";
         break;
       default:
@@ -91,6 +96,22 @@
     var name;
     name = $(this).closest(".project").data('name');
     return socket.emit('view', {
+      name: name
+    });
+  });
+
+  $(".stop").click(function() {
+    var name;
+    name = $(this).closest(".project").data('name');
+    return socket.emit('stop', {
+      name: name
+    });
+  });
+
+  $(".start").click(function() {
+    var name;
+    name = $(this).closest(".project").data('name');
+    return socket.emit('restart', {
       name: name
     });
   });
