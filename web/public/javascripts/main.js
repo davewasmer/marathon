@@ -32,16 +32,19 @@
     return $status.html("<i class='icon icon-white icon-" + symbol + "'></i> <span class='text'>" + status + "</span>");
   };
 
+  $(".project .action").on('click', function(e) {
+    e.stopPropagation();
+    return false;
+  });
+
   $(".project").on('click', function(e) {
     var $log;
-    if (!$(e.target).closest('.control').length > 0) {
-      if ($(e.currentTarget).is('.active')) {
-        return $(this).removeClass('active').find(".console").slideUp('fast');
-      } else {
-        $(this).addClass('active');
-        $log = $(this).find(".console").slideDown('fast').find(".log");
-        return updateScroll($log);
-      }
+    if ($(e.currentTarget).is('.active')) {
+      return $(this).removeClass('active').find(".console").slideUp('fast');
+    } else {
+      $(this).addClass('active');
+      $log = $(this).find(".console").slideDown('fast').find(".log");
+      return updateScroll($log);
     }
   });
 

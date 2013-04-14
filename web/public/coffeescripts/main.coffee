@@ -21,14 +21,17 @@ updateStatus = (name, status) ->
       symbol = "remove"
   $status.html "<i class='icon icon-white icon-#{symbol}'></i> <span class='text'>#{status}</span>"
 
+$(".project .action").on 'click', (e) ->
+  e.stopPropagation()
+  false
+
 $(".project").on 'click', (e) ->
-  if not $(e.target).closest('.control').length > 0
-    if $(e.currentTarget).is('.active')
-      $(@).removeClass('active').find(".console").slideUp('fast')
-    else
-      $(@).addClass('active')
-      $log = $(@).find(".console").slideDown('fast').find(".log")
-      updateScroll $log
+  if $(e.currentTarget).is('.active')
+    $(@).removeClass('active').find(".console").slideUp('fast')
+  else
+    $(@).addClass('active')
+    $log = $(@).find(".console").slideDown('fast').find(".log")
+    updateScroll $log
 
 for p in window.projects
   do (p) ->
