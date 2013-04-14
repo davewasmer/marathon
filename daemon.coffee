@@ -68,7 +68,7 @@ update = ->
 
 # On a SIGINT, after all the projects clean themselves up,
 # exit the process
-exitAfterCleanup = ->
+exitAfterCleanup = (count = 0)->
   done = true
   for p in projects
     if p.status isnt "dead"
@@ -77,8 +77,14 @@ exitAfterCleanup = ->
       break
   if done
     process.exit()
+  else if count > 10
+    console.log 'Tried to stop servers for too long. Exiting anyways.'
+    process.exit()
   else
-    setTimeout exitAfterCleanup, 200
+    setTimeout ()->
+      exitAfterCleanup(++count)
+    , 200
+
 process.on 'SIGINT', exitAfterCleanup
 
 

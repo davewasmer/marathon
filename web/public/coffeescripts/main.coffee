@@ -11,7 +11,8 @@ updateStatus = (name, status) ->
     when "starting", "stopping"
       $status.addClass("warning")
       symbol = "refresh"
-      $project.find('.start,.restart,.stop').addClass('hide')
+      $project.find('.restart').removeClass('hide')
+      $project.find('.start,.stop').addClass('hide')
     when "started"
       $status.addClass("success")
       $project.find('.start').addClass('hide')
@@ -23,6 +24,8 @@ updateStatus = (name, status) ->
       $project.find('.start').removeClass('hide')
       symbol = "off"
     else
+      $project.find('.start').removeClass('hide')
+      $project.find('.stop,.restart').addClass('hide')
       symbol = "remove"
   $status.html "<i class='icon icon-white icon-#{symbol}'></i> <span class='text'>#{status}</span>"
 
