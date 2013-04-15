@@ -71,23 +71,19 @@ module.exports = class Project extends EventEmitter
           log.info "[#{@name}] stopped"
           @emit 'stopped', code: code
 
-        count = 0
         checkStart = =>
-          ++count
           if @status is "starting"
-            if count > 30
-              log.info "[#{@name}] failed to start"
-            else
-              @isResponding (responding)=>
-                if @status is "starting"
-                  if !responding
-                    setTimeout =>
-                      checkStart()
-                    , 500
-                  else
-                    @status = "started"
-                    @emit 'started'
-                    log.info "[#{@name}] started"
+            @isResponding (responding)=>
+              if @status is "starting"
+                if !responding
+                  clearTimeout(@checkTimer)
+                  @checkTimer = setTimeout =>
+                    checkStart()
+                  , 500
+                else
+                  @status = "started"
+                  @emit 'started'
+                  log.info "[#{@name}] started"
 
         checkStart()
         return true
