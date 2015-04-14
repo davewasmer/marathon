@@ -25,11 +25,11 @@ app.configure ->
 
   app.use (req, res, next) ->
     # render the marathon UI page
-    if req.host.split('.')[...-1].join('.') is 'marathon'
+    if req.host is "marathon.#{config.tld}" or req.host == 'localhost'
       next()
     # render project 404
     else
-      res.render 'project-not-found.html', name: domain
+      res.render 'project-not-found.html', name: req.host
 
   app.use express.errorHandler()
   app.use less
@@ -83,6 +83,16 @@ app.on 'restart', (data) ->
   project = getProjectNamed(data.name)
   project.restart()
 
+app.on 'stop', (data) ->
+  log.info "stopping #{data.name}"
+  project = getProjectNamed(data.name)
+  project.stop()
+
+app.on 'start', (data) ->
+  log.info "starting #{data.name}"
+  project = getProjectNamed(data.name)
+  project.start()
+
 app.on 'browse', (data) ->
   log.info "browsing #{data.name}"
   project = getProjectNamed(data.name)
@@ -95,7 +105,7 @@ app.on 'view', (data) ->
 
 app.on 'edit', (data) ->
   project = getProjectNamed(data.name)
-  log.info "browsing #{data.name}"
+  log.info "editing #{data.name}"
   cp.exec "#{config.actions.editcmd} #{project.path}"
 
 

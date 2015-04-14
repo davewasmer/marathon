@@ -5,6 +5,7 @@ EventEmitter = require('eventemitter2').EventEmitter2
 File = require('oofile').File
 uuid = require('node-uuid').v4
 config = require('./config')
+request = require 'request'
 
 module.exports = class Project extends EventEmitter
 
@@ -58,10 +59,6 @@ module.exports = class Project extends EventEmitter
 
         # pipe data events
         @process.stdout.on 'data', (d) =>
-          if @status is "starting"
-            @status = "started"
-            @emit "started"
-            log.info "[#{@name}] started"
           @emit 'log', message: d.toString()
           fs.appendFile @log.toString(), d
         @process.stderr.on 'data', (d) =>
@@ -74,6 +71,21 @@ module.exports = class Project extends EventEmitter
           log.info "[#{@name}] stopped"
           @emit 'stopped', code: code
 
+        checkStart = =>
+          if @status is "starting"
+            @isResponding (responding)=>
+              if @status is "starting"
+                if !responding
+                  clearTimeout(@checkTimer)
+                  @checkTimer = setTimeout =>
+                    checkStart()
+                  , 500
+                else
+                  @status = "started"
+                  @emit 'started'
+                  log.info "[#{@name}] started"
+
+        checkStart()
         return true
 
   # shut down the server
@@ -116,6 +128,18 @@ module.exports = class Project extends EventEmitter
     env[key] = value for key, value of process.env
     env[key.toUpperCase()] = value for key, value of options
     return env
+
+  isResponding: (cb)=>
+    timer = setTimeout ()->
+      cb(false)
+    , 1000
+    request "http://localhost:#{@port}", (err, response, body)=>
+      if !err?
+        clearTimeout timer
+        cb(true)
+      else
+        cb(false)
+
 
   tail: (cb) ->
     cp.exec "tail -n 100 #{@log}", (err, stdout, stderr) ->

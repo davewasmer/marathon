@@ -31,3 +31,4 @@ Icon
 
 # SublimeText
 *.sublime-workspace
+.idea
